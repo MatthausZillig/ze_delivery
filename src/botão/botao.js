@@ -1,6 +1,18 @@
-﻿import React, { useEffect } from 'react';
+﻿import React from 'react';
+import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import * as queries from '../graphql/queries/queries';
+
+const Button = styled.button`
+  display: inline-block;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+  display: block;
+`;
 
 export const Botao = () => {
   const { loading, error, data } = useQuery(queries.POC, {
@@ -17,5 +29,9 @@ export const Botao = () => {
 
   console.log(data);
 
-  return <button>Boão</button>;
+  return (
+    <div>
+      <Button>Olá</Button>
+    </div>
+  );
 };
