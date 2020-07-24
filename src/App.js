@@ -1,14 +1,18 @@
 ﻿import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import Client from './graphql/Client';
+import Home from './pages/Home';
+import ProductPage from './pages/ProductPage';
 import { ApolloProvider } from '@apollo/client';
-import { Botao } from './botão/botao';
 
 const App = () => {
   return (
     <ApolloProvider client={Client}>
       <div>
-        <p>Stray React</p>
-        <Botao />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/products" component={ProductPage} />
+        </Switch>
       </div>
     </ApolloProvider>
   );
