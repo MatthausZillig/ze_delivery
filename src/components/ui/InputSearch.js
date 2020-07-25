@@ -12,11 +12,10 @@ const InputContainer = styled.div`
     width: 100%;
     height: 48px;
     font-weight: lighter;
-    box-sizing: border-box;
     color: rgb(51, 51, 51);
     background-color: rgb(255, 255, 255);
-    line-height: 20px;
-    padding-right: 20px;
+    line-height: 23px;
+    padding-right: 16px;
     z-index: 1;
     padding-left: 56px;
     font-size: 16px;
@@ -27,16 +26,16 @@ const InputContainer = styled.div`
   }
 `;
 
-export const InputSearch = () => {
+export const InputSearch = ({ placeholder, value, callback }) => {
   return (
     <InputContainer>
       <input
         id="inputSearch"
         type="text"
         name="input-search"
-        placeholder="Insira o endereço com número"
-        autocapitalize="none"
-        autocomplete="off"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => callback(e)}
       ></input>
     </InputContainer>
   );

@@ -1,4 +1,5 @@
 ﻿const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -7,6 +8,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        test: /\.(js|jsx)$/,
+      }),
+    ],
   },
   module: {
     rules: [
