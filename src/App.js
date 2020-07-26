@@ -1,18 +1,19 @@
 ﻿import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Client from './graphql/Client';
-import Home from './pages/HomePage';
+import { ApolloProvider } from '@apollo/client';
 import { Navbar } from './components/generic/navbar/navbar';
 import { Footer } from './components/generic/footer/Footer';
 import { Image } from './components/generic/image/Img';
 import { Button } from './components/generic/button/button';
+import { Grid, Item } from './components/generic/footer/grid/grid';
+import Client from './graphql/Client';
+import Home from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
-import { ApolloProvider } from '@apollo/client';
 
 const App = () => {
   return (
     <ApolloProvider client={Client}>
-      <div>
+      <Grid paddingLeft="0px" paddingRight="0px" marginBottom="0px">
         <Navbar>
           <Image
             sizeW="121px"
@@ -27,7 +28,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route path="/produtos" component={ProductPage} />
         </Switch>
-      </div>
+      </Grid>
     </ApolloProvider>
   );
 };

@@ -50344,6 +50344,128 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./src/components/blocs/AutocompleteSearchPoc.js":
+/*!*******************************************************!*\
+  !*** ./src/components/blocs/AutocompleteSearchPoc.js ***!
+  \*******************************************************/
+/*! exports provided: AutocompleteSearchPoc */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AutocompleteSearchPoc", function() { return AutocompleteSearchPoc; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var use_places_autocomplete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! use-places-autocomplete */ "./node_modules/use-places-autocomplete/dist/index.esm.js");
+/* harmony import */ var _ui_InputSearch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/InputSearch */ "./src/components/ui/InputSearch.js");
+/* harmony import */ var react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-cool-onclickoutside */ "./node_modules/react-cool-onclickoutside/dist/index.esm.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+var AutocompleteSearchPoc = function AutocompleteSearchPoc() {
+  var _usePlacesAutocomplet = Object(use_places_autocomplete__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    requestOptions: {
+      /* Define search scope here */
+    },
+    debounce: 300
+  }),
+      ready = _usePlacesAutocomplet.ready,
+      value = _usePlacesAutocomplet.value,
+      _usePlacesAutocomplet2 = _usePlacesAutocomplet.suggestions,
+      status = _usePlacesAutocomplet2.status,
+      data = _usePlacesAutocomplet2.data,
+      setValue = _usePlacesAutocomplet.setValue,
+      clearSuggestions = _usePlacesAutocomplet.clearSuggestions;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+      _useState2 = _slicedToArray(_useState, 2),
+      coordinates = _useState2[0],
+      setCoordinates = _useState2[1];
+
+  var ref = Object(react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_3__["default"])(function () {
+    // When user clicks outside of the component, we can dismiss
+    // the searched suggestions by calling this method
+    clearSuggestions();
+  });
+
+  var handleInput = function handleInput(e) {
+    // Update the keyword of the input element
+    setValue(e.target.value);
+  };
+
+  var handleSelect = function handleSelect(_ref) {
+    var description = _ref.description;
+    return function () {
+      // When user selects a place, we can replace the keyword without request data from API
+      // by setting the second parameter as "false"
+      setValue(description, false);
+      clearSuggestions(); // Get latitude and longitude
+
+      Object(use_places_autocomplete__WEBPACK_IMPORTED_MODULE_1__["getGeocode"])({
+        address: description
+      }).then(function (results) {
+        return Object(use_places_autocomplete__WEBPACK_IMPORTED_MODULE_1__["getLatLng"])(results[0]);
+      }).then(function (_ref2) {
+        var lat = _ref2.lat,
+            lng = _ref2.lng;
+        setCoordinates(function (state) {
+          return state = {
+            lat: lat,
+            lng: lng
+          };
+        });
+        console.log('📍 Coordinates: ', {
+          lat: lat,
+          lng: lng
+        });
+      })["catch"](function (error) {
+        console.log('😱 Error: ', error);
+      });
+    };
+  };
+
+  if (coordinates) {
+    console.log(coordinates);
+  }
+
+  var renderSuggestions = function renderSuggestions() {
+    return data.map(function (suggestion) {
+      var id = suggestion.id,
+          _suggestion$structure = suggestion.structured_formatting,
+          main_text = _suggestion$structure.main_text,
+          secondary_text = _suggestion$structure.secondary_text;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: id,
+        onClick: handleSelect(suggestion)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, main_text), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, secondary_text));
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    ref: ref
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui_InputSearch__WEBPACK_IMPORTED_MODULE_2__["InputSearch"], {
+    value: value,
+    callback: handleInput,
+    disabled: !ready,
+    placeholder: "Insira o endere\xE7o com n\xFAmero"
+  }), status === 'OK' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, renderSuggestions()));
+};
+
+/***/ }),
+
 /***/ "./src/components/generic/button/button.js":
 /*!*************************************************!*\
   !*** ./src/components/generic/button/button.js ***!
@@ -50444,7 +50566,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FooterContainer", function() { return FooterContainer; });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: rgb(235, 195, 64);\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n"]);
+  var data = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: #000;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 40px;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -50605,6 +50727,41 @@ var Nav = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].nav(_templat
 
 /***/ }),
 
+/***/ "./src/components/ui/BannerHero.js":
+/*!*****************************************!*\
+  !*** ./src/components/ui/BannerHero.js ***!
+  \*****************************************/
+/*! exports provided: BannerHero */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BannerHero", function() { return BannerHero; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  height: calc(100vh - 40px);\n  background-image: url('./homeBackground.jpg');\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+
+var BannerContainer = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].section(_templateObject());
+var BannerHero = function BannerHero(_ref) {
+  var children = _ref.children;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BannerContainer, null, children);
+};
+
+/***/ }),
+
 /***/ "./src/components/ui/InputSearch.js":
 /*!******************************************!*\
   !*** ./src/components/ui/InputSearch.js ***!
@@ -50642,8 +50799,6 @@ var InputSearch = function InputSearch(_ref) {
     type: "text",
     name: "input-search",
     placeholder: placeholder,
-    autocapitalize: "none",
-    autocomplete: "off",
     value: value,
     onChange: function onChange(e) {
       return callback(e);
@@ -50744,88 +50899,14 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_ui_InputSearch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ui/InputSearch */ "./src/components/ui/InputSearch.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var use_places_autocomplete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! use-places-autocomplete */ "./node_modules/use-places-autocomplete/dist/index.esm.js");
-/* harmony import */ var react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-cool-onclickoutside */ "./node_modules/react-cool-onclickoutside/dist/index.esm.js");
-
-
+/* harmony import */ var _components_blocs_AutocompleteSearchPoc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/blocs/AutocompleteSearchPoc */ "./src/components/blocs/AutocompleteSearchPoc.js");
+/* harmony import */ var _components_ui_BannerHero__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ui/BannerHero */ "./src/components/ui/BannerHero.js");
 
 
 
 
 var Home = function Home() {
-  var _usePlacesAutocomplet = Object(use_places_autocomplete__WEBPACK_IMPORTED_MODULE_3__["default"])({
-    requestOptions: {
-      /* Define search scope here */
-    },
-    debounce: 300
-  }),
-      ready = _usePlacesAutocomplet.ready,
-      value = _usePlacesAutocomplet.value,
-      _usePlacesAutocomplet2 = _usePlacesAutocomplet.suggestions,
-      status = _usePlacesAutocomplet2.status,
-      data = _usePlacesAutocomplet2.data,
-      setValue = _usePlacesAutocomplet.setValue,
-      clearSuggestions = _usePlacesAutocomplet.clearSuggestions;
-
-  var ref = Object(react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_4__["default"])(function () {
-    // When user clicks outside of the component, we can dismiss
-    // the searched suggestions by calling this method
-    clearSuggestions();
-  });
-
-  var handleInput = function handleInput(e) {
-    // Update the keyword of the input element
-    setValue(e.target.value);
-  };
-
-  var handleSelect = function handleSelect(_ref) {
-    var description = _ref.description;
-    return function () {
-      // When user selects a place, we can replace the keyword without request data from API
-      // by setting the second parameter as "false"
-      setValue(description, false);
-      clearSuggestions(); // Get latitude and longitude via utility functions
-
-      Object(use_places_autocomplete__WEBPACK_IMPORTED_MODULE_3__["getGeocode"])({
-        address: description
-      }).then(function (results) {
-        return Object(use_places_autocomplete__WEBPACK_IMPORTED_MODULE_3__["getLatLng"])(results[0]);
-      }).then(function (_ref2) {
-        var lat = _ref2.lat,
-            lng = _ref2.lng;
-        console.log('📍 Coordinates: ', {
-          lat: lat,
-          lng: lng
-        });
-      })["catch"](function (error) {
-        console.log('😱 Error: ', error);
-      });
-    };
-  };
-
-  var renderSuggestions = function renderSuggestions() {
-    return data.map(function (suggestion) {
-      var id = suggestion.id,
-          _suggestion$structure = suggestion.structured_formatting,
-          main_text = _suggestion$structure.main_text,
-          secondary_text = _suggestion$structure.secondary_text;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        key: id,
-        onClick: handleSelect(suggestion)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, main_text), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, secondary_text));
-    });
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    ref: ref
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_ui_InputSearch__WEBPACK_IMPORTED_MODULE_1__["InputSearch"], {
-    value: value,
-    callback: handleInput,
-    disabled: !ready,
-    placeholder: "Insira o endere\xE7o com n\xFAmero"
-  }), status === 'OK' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, renderSuggestions()));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_ui_BannerHero__WEBPACK_IMPORTED_MODULE_2__["BannerHero"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_blocs_AutocompleteSearchPoc__WEBPACK_IMPORTED_MODULE_1__["AutocompleteSearchPoc"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Home);

@@ -11,7 +11,7 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+
   padding: 0 3rem;
   position: ${({ fixed }) => fixed && `fixed`};
   width: 100vw;
