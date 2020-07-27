@@ -32,6 +32,7 @@ export const Grid = styled.main`
 export const Container = styled.section`
   display: flex;
   flex-wrap: ${({ flexWrap }) => flexWrap || 'wrap'};
+  flex-direction: ${({ flexDirection }) => flexDirection || 'row'};
   padding-left: ${({ paddingLeft }) => paddingLeft || '64px'};
   padding-right: ${({ paddingRight }) => paddingRight || '64px'};
   margin: ${({ margin }) => margin || '0px'};

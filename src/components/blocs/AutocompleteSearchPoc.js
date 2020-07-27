@@ -40,7 +40,6 @@ export const AutocompleteSearchPoc = ({ goToProductPage }) => {
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         setCoordinates((state) => (state = { lat, lng }));
-        console.log('📍 Coordinates: ', { lat, lng });
         localStorage.setItem('lat', lat);
         localStorage.setItem('lng', lng);
         const newDate = new Date();

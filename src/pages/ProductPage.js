@@ -1,14 +1,13 @@
 ﻿import React from 'react';
 import { useQuery } from '@apollo/client';
 import * as queries from '../graphql/queries/queries';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import ProductsList from '../components/ui/ProductsList';
 
 const ProductPage = ({ history }) => {
   const lat = localStorage.getItem('lat');
   const lng = localStorage.getItem('lng');
   const date = localStorage.getItem('date');
-  console.log(date);
   const { loading, error, data } = useQuery(queries.POC, {
     variables: {
       algorithm: 'NEAREST',
@@ -34,7 +33,9 @@ const ProductPage = ({ history }) => {
     return null;
   }
 
-  return <ProductsList id={pocSearch[0].id} />;
+  return (
+    <ProductsList id={pocSearch && pocSearch[0] && pocSearch[0].id ? pocSearch[0].id : 'Error'} />
+  );
 };
 
 export default withRouter(ProductPage);

@@ -1,13 +1,23 @@
 ﻿import React from 'react';
 import { useQuery } from '@apollo/client';
+import Lottie from 'react-lottie';
+import { Link } from 'react-router-dom';
+import animationData from '../../lotties/empty-and-lost.json';
 import * as queries from '../../graphql/queries/queries';
-import Helpers from '../helpers';
 import { path } from 'ramda';
 import { Container } from '../generic/grid/grid';
+import { Loading } from '../generic/loading';
 import { Card } from './CardProduct';
 
 const ProductsList = ({ id }) => {
-  console.log(id);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
   const { loading, error, data } = useQuery(queries.PRODS, {
     variables: {
       id: id,
@@ -20,15 +30,23 @@ const ProductsList = ({ id }) => {
     return null;
   }
 
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  if (loading) return <Loading />;
+  if (error) {
+    return (
+      <Container margin="64px 0px" flexDirection="column">
+        <Lottie options={defaultOptions} height={400} width={400} />
+        <Link to="/">
+          <p>Ocorreu algum erro, tente novamente...</p>
+        </Link>
+      </Container>
+    );
+  }
   let products = path(['poc', 'products'], data);
-  console.log(products);
-
-  Helpers.formatMoney(2.09, 2, ',', '.', 'R$');
 
   return (
     <Container margin="64px 0px">
+      {loading && <Loading />}
+
       {data &&
         products &&
         products.map((product, index) => {
@@ -43,6 +61,7 @@ const ProductsList = ({ id }) => {
             />
           );
         })}
+      {error && <di>Nenhum produto encontrado!</di>}
     </Container>
   );
 };
