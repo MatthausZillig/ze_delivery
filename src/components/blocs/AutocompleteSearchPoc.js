@@ -1,9 +1,11 @@
 ﻿import React, { useState } from 'react';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
+import { Link, withRouter } from 'react-router-dom';
 import { InputSearch } from '../ui/InputSearch';
+import { Suggestions } from '../ui/Suggestions';
 import useOnclickOutside from 'react-cool-onclickoutside';
 
-export const AutocompleteSearchPoc = () => {
+export const AutocompleteSearchPoc = ({ goToProductPage }) => {
   const {
     ready,
     value,
@@ -39,15 +41,17 @@ export const AutocompleteSearchPoc = () => {
       .then(({ lat, lng }) => {
         setCoordinates((state) => (state = { lat, lng }));
         console.log('📍 Coordinates: ', { lat, lng });
+        localStorage.setItem('lat', lat);
+        localStorage.setItem('lng', lng);
+        const newDate = new Date();
+        let formatedDate = newDate.toISOString();
+        localStorage.setItem('date', formatedDate);
+        goToProductPage();
       })
       .catch((error) => {
         console.log('😱 Error: ', error);
       });
   };
-
-  if (coordinates) {
-    console.log(coordinates);
-  }
 
   const renderSuggestions = () =>
     data.map((suggestion) => {
@@ -70,7 +74,7 @@ export const AutocompleteSearchPoc = () => {
         disabled={!ready}
         placeholder="Insira o endereço com número"
       />
-      {status === 'OK' && <ul>{renderSuggestions()}</ul>}
+      {status === 'OK' && <Suggestions>{renderSuggestions()}</Suggestions>}
     </div>
   );
 };

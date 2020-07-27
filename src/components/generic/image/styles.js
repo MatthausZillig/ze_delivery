@@ -8,4 +8,5 @@ const configs = {
 export const Img = styled.img`
   width: ${({ sizeW }) => sizeW || configs.width};
   height: ${({ sizeH }) => sizeH || configs.height};
+  margin: ${({ margin }) => margin || '0px'};
 `;

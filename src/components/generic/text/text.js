@@ -1,5 +1,5 @@
-﻿import styled from 'styled-components'
-import { device } from '../grid/breakpoints'
+﻿import styled from 'styled-components';
+import { device } from '../grid/breakpoints';
 
 export const Paragraph = styled.p`
   font-size: ${({ size }) => size || '16px'};
@@ -9,5 +9,6 @@ export const Paragraph = styled.p`
   margin: ${({ margin }) => margin || '0'};
   @media ${device.tablet} {
     ${({ smSize }) => smSize && `font-size: ${smSize}`}
+    text-align: center;
   }
-`
+`;
