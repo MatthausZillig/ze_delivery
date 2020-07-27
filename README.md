@@ -18,7 +18,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Setup de desenvolvimento
 
-Depois de clonar o projeto, instale todas as dependências com o comando **yarn** ou **npm install** e rode o comando **yarn start** ou **npm start** para abrir o projeto em modo de desenvolvimento, na porta [http://localhost:3000](http://localhost:8080).
+Depois de clonar o projeto, instale todas as dependências com o comando **yarn** ou **npm install** e rode o comando **yarn start** ou **npm start** para abrir o projeto em modo de desenvolvimento, na porta [http://localhost:8080](http://localhost:8080).
 
 ```sh
 yarn
