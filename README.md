@@ -12,7 +12,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Babel](https://babeljs.io/)
 - [Node.js](https://nodejs.org/en/)
 - [React](https://reactjs.org)
-- [Styled Components] (https://developers.google.com/places/web-service/overview)
+- [Styled Components](https://developers.google.com/places/web-service/overview)
 - [Google Palces API](https://developers.google.com/places/web-service/overview)
 
 ## 💻 Setup de desenvolvimento
