@@ -34,7 +34,7 @@ const ProductsList = ({ id }) => {
   if (error) {
     return (
       <Container margin="64px 0px" flexDirection="column">
-        <Lottie options={defaultOptions} height={400} width={400} />
+        <Lottie options={defaultOptions} height={400} width={320} />
         <Link to="/">
           <p>Ocorreu algum erro, tente novamente...</p>
         </Link>
