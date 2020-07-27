@@ -11,6 +11,8 @@ import { Card } from './CardProduct';
 
 const ProductsList = ({ id }) => {
   // Lottie props
+  let price;
+  let url;
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -47,22 +49,13 @@ const ProductsList = ({ id }) => {
   return (
     <Container margin="64px 0px">
       {loading && <Loading />}
-
       {data &&
         products &&
         products.map((product, index) => {
-          let price = path(['productVariants', '0', 'price'], product);
-          return (
-            <Card
-              key={index}
-              image={product.images[0].url}
-              title={product.title}
-              price={price}
-              index={index}
-            />
-          );
+          price = path(['productVariants', '0', 'price'], product);
+          url = path(['images', '0', 'url'], product);
+          return <Card key={index} image={url} title={product.title} price={price} index={index} />;
         })}
-      {error && <di>Nenhum produto encontrado!</di>}
     </Container>
   );
 };
