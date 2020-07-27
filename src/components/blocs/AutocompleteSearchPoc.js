@@ -40,6 +40,7 @@ export const AutocompleteSearchPoc = ({ goToProductPage }) => {
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         setCoordinates((state) => (state = { lat, lng }));
+        // Save data in localStorage
         localStorage.setItem('lat', lat);
         localStorage.setItem('lng', lng);
         const newDate = new Date();
@@ -53,6 +54,7 @@ export const AutocompleteSearchPoc = ({ goToProductPage }) => {
   };
 
   const renderSuggestions = () =>
+    // Return the suggestions
     data.map((suggestion) => {
       const {
         id,

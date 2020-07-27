@@ -1,4 +1,13 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200,900');
+
+:root {
+  --text-color: hsla(210, 50%, 85%, 1);
+  --shadow-color: hsla(210, 40%, 52%, 0.4);
+  --btn-color: hsl(210, 80%, 42%);
+  --bg-color: #141218;
+}
+
+body {
   margin: 0;
   font-family: 'Roboto Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;

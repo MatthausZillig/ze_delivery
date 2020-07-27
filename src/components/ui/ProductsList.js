@@ -10,6 +10,7 @@ import { Loading } from '../generic/loading';
 import { Card } from './CardProduct';
 
 const ProductsList = ({ id }) => {
+  // Lottie props
   const defaultOptions = {
     loop: true,
     autoplay: true,

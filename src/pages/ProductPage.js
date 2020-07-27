@@ -2,9 +2,11 @@
 import { useQuery } from '@apollo/client';
 import * as queries from '../graphql/queries/queries';
 import { withRouter } from 'react-router-dom';
+import { Loading } from '../components/generic/loading';
 import ProductsList from '../components/ui/ProductsList';
 
 const ProductPage = ({ history }) => {
+  // Get all data to pass to query
   const lat = localStorage.getItem('lat');
   const lng = localStorage.getItem('lng');
   const date = localStorage.getItem('date');
@@ -21,7 +23,7 @@ const ProductPage = ({ history }) => {
     return null;
   }
 
-  if (loading) return 'Loading...';
+  if (loading) return <Loading />;
   if (error) return `Error! ${error.message}`;
 
   const { pocSearch } = data;
